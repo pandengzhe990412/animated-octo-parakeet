@@ -1,0 +1,397 @@
+[23:24:12] ✅ yt-dlp 已安装
+[23:24:12] 🎬 开始下载视频
+[23:24:12] URL: https://youtu.be/jKr9Omaf3Gs
+[23:24:12] 输出目录: D:\YT_Market_Tool\youtube-clips
+[23:24:12] 📊 获取视频信息...
+[23:24:17] 下载失败: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[23:24:17] Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1696, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1831, in __extract_info
+    ie_result = ie.extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 762, in extract
+    ie_result = self._real_extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_video.py", line 3910, in _real_extract
+    self.raise_no_formats(reason, expected=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 1274, in raise_no_formats
+    raise ExtractorError(msg, expected=expected, video_id=video_id)
+yt_dlp.utils.ExtractorError: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\YT_Market_Tool\direct_download.py", line 57, in <module>
+    info = ydl.extract_info(url, download=False)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1685, in extract_info
+    return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1714, in wrapper
+    self.report_error(str(e), e.format_traceback())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+[23:26:21] ✅ yt-dlp 已安装
+[23:26:21] 🎬 开始下载视频
+[23:26:21] URL: https://youtu.be/jKr9Omaf3Gs
+[23:26:21] 输出目录: D:\YT_Market_Tool\youtube-clips
+[23:26:21] 🍪 尝试从浏览器获取 cookies...
+[23:26:21] 尝试浏览器: chrome
+[23:26:21] 📊 获取视频信息...
+[23:26:22] ❌ 下载失败: [0;31mERROR:[0m [0;31mERROR:[0m Could not copy Chrome cookie database. See  https://github.com/yt-dlp/yt-dlp/issues/7271  for more info
+[23:26:22] Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 324, in _extract_chrome_cookies
+    cursor = _open_database_copy(cookie_database_path, tmpdir)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 1115, in _open_database_copy
+    shutil.copy(database_path, database_copy_path)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 489, in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\伟杰\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Network\\Cookies'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 99, in load_cookies
+    extract_cookies_from_browser(browser_name, profile, YDLLogger(ydl), keyring=keyring, container=container))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 122, in extract_cookies_from_browser
+    return _extract_chrome_cookies(browser_name, profile, keyring, logger)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 364, in _extract_chrome_cookies
+    logger.error(message)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\utils\_utils.py", line 5684, in error
+    self._ydl.report_error(message, is_error=is_error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m Could not copy Chrome cookie database. See  https://github.com/yt-dlp/yt-dlp/issues/7271  for more info
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 4174, in cookiejar
+    return load_cookies(
+        self.params.get('cookiefile'), self.params.get('cookiesfrombrowser'), self)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 113, in load_cookies
+    raise CookieLoadError('failed to load cookies')
+yt_dlp.cookies.CookieLoadError: failed to load cookies
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\YT_Market_Tool\download_with_cookies.py", line 63, in <module>
+    info = ydl.extract_info(url, download=False)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1685, in extract_info
+    return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1696, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1831, in __extract_info
+    ie_result = ie.extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 759, in extract
+    self.initialize()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 668, in initialize
+    self._real_initialize()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_video.py", line 1842, in _real_initialize
+    super()._real_initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_base.py", line 679, in _real_initialize
+    self._initialize_pref()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_base.py", line 662, in _initialize_pref
+    pref_cookie = self._youtube_cookies.get('PREF')
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_base.py", line 763, in _youtube_cookies
+    return self._get_cookies('https://www.youtube.com')
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 3768, in _get_cookies
+    return LenientSimpleCookie(self._downloader.cookiejar.get_cookie_header(url))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\functools.py", line 1126, in __get__
+    val = self.func(instance)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 4178, in cookiejar
+    self.report_error(str(cause), tb=''.join(traceback.format_exception(cause)))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m [0;31mERROR:[0m Could not copy Chrome cookie database. See  https://github.com/yt-dlp/yt-dlp/issues/7271  for more info
+
+[23:27:43] ✅ yt-dlp 已安装
+[23:27:43] 🎬 开始下载视频
+[23:27:43] URL: https://youtu.be/jKr9Omaf3Gs
+[23:27:43] 输出目录: D:\YT_Market_Tool\youtube-clips
+[23:27:43] 🍪 使用 Edge 浏览器 cookies...
+[23:27:43] 📊 获取视频信息...
+[23:27:44] ❌ 下载失败: [0;31mERROR:[0m [0;31mERROR:[0m Could not copy Chrome cookie database. See  https://github.com/yt-dlp/yt-dlp/issues/7271  for more info
+[23:27:44] Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 324, in _extract_chrome_cookies
+    cursor = _open_database_copy(cookie_database_path, tmpdir)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 1115, in _open_database_copy
+    shutil.copy(database_path, database_copy_path)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 489, in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\shutil.py", line 313, in copyfile
+    with open(src, 'rb') as fsrc:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\伟杰\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Network\\Cookies'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 99, in load_cookies
+    extract_cookies_from_browser(browser_name, profile, YDLLogger(ydl), keyring=keyring, container=container))
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 122, in extract_cookies_from_browser
+    return _extract_chrome_cookies(browser_name, profile, keyring, logger)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 364, in _extract_chrome_cookies
+    logger.error(message)
+    ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\utils\_utils.py", line 5684, in error
+    self._ydl.report_error(message, is_error=is_error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m Could not copy Chrome cookie database. See  https://github.com/yt-dlp/yt-dlp/issues/7271  for more info
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 4174, in cookiejar
+    return load_cookies(
+        self.params.get('cookiefile'), self.params.get('cookiesfrombrowser'), self)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\cookies.py", line 113, in load_cookies
+    raise CookieLoadError('failed to load cookies')
+yt_dlp.cookies.CookieLoadError: failed to load cookies
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\YT_Market_Tool\download_edge.py", line 53, in <module>
+    info = ydl.extract_info(url, download=False)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1685, in extract_info
+    return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1696, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1831, in __extract_info
+    ie_result = ie.extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 759, in extract
+    self.initialize()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 668, in initialize
+    self._real_initialize()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_video.py", line 1842, in _real_initialize
+    super()._real_initialize()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_base.py", line 679, in _real_initialize
+    self._initialize_pref()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_base.py", line 662, in _initialize_pref
+    pref_cookie = self._youtube_cookies.get('PREF')
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_base.py", line 763, in _youtube_cookies
+    return self._get_cookies('https://www.youtube.com')
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 3768, in _get_cookies
+    return LenientSimpleCookie(self._downloader.cookiejar.get_cookie_header(url))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\functools.py", line 1126, in __get__
+    val = self.func(instance)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 4178, in cookiejar
+    self.report_error(str(cause), tb=''.join(traceback.format_exception(cause)))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m [0;31mERROR:[0m Could not copy Chrome cookie database. See  https://github.com/yt-dlp/yt-dlp/issues/7271  for more info
+
+[23:29:29] ✅ yt-dlp 已安装
+[23:29:29] 🎬 开始下载视频
+[23:29:29] URL: https://youtu.be/jKr9Omaf3Gs
+[23:29:29] 输出目录: D:\YT_Market_Tool\youtube-clips
+[23:29:29] 🔄 使用替代方法（无 cookies）...
+[23:29:30] 📊 获取视频信息...
+[23:29:37] ❌ 下载失败: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[23:29:37] ============================================================
+[23:29:37] ⚠️ YouTube 机器人验证阻止了下载
+[23:29:37] 
+[23:29:37] 请尝试以下解决方案：
+[23:29:37] 
+[23:29:37] 方案 1: 手动导出 Cookies（推荐）
+[23:29:37]   1. 在浏览器中安装 'Get cookies.txt' 扩展
+[23:29:37]   2. 访问 YouTube 并登录
+[23:29:37]   3. 点击扩展，导出 cookies.txt
+[23:29:37]   4. 将 cookies.txt 保存到: D:\YT_Market_Tool\cookies.txt
+[23:29:37]   5. 重新运行下载脚本
+[23:29:37] 
+[23:29:37] 方案 2: 关闭所有浏览器后重试
+[23:29:37]   1. 关闭 Chrome、Edge 等所有浏览器
+[23:29:37]   2. 重新运行下载脚本
+[23:29:37] 
+[23:29:37] 方案 3: 使用 cookies 文件
+[23:29:37]   如果已有 cookies.txt，将其放在 D:\YT_Market_Tool\ 目录
+[23:29:37] ============================================================
+[23:29:37] Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1696, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1831, in __extract_info
+    ie_result = ie.extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 762, in extract
+    ie_result = self._real_extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_video.py", line 3910, in _real_extract
+    self.raise_no_formats(reason, expected=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 1274, in raise_no_formats
+    raise ExtractorError(msg, expected=expected, video_id=video_id)
+yt_dlp.utils.ExtractorError: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\YT_Market_Tool\download_alternative.py", line 53, in <module>
+    info = ydl.extract_info(url, download=False)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1685, in extract_info
+    return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1714, in wrapper
+    self.report_error(str(e), e.format_traceback())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+[23:30:48] ✅ yt-dlp 已安装
+[23:30:48] 🎬 开始下载视频（最终尝试）
+[23:30:48] URL: https://youtu.be/jKr9Omaf3Gs
+[23:30:48] 输出目录: D:\YT_Market_Tool\youtube-clips
+[23:30:48] 
+🔄 尝试 配置 1: 使用 no-playlist...
+[23:30:48] 📊 获取视频信息...
+[23:30:53] ⚠️ 此配置失败，尝试下一个...
+[23:30:53] 
+🔄 尝试 配置 2: 添加 extractor-args...
+[23:30:53] 📊 获取视频信息...
+[23:30:59] ⚠️ 此配置失败，尝试下一个...
+[23:30:59] ============================================================
+[23:30:59] ❌ 所有配置都失败了
+[23:30:59] 
+[23:30:59] YouTube 要求提供身份验证（cookies）
+[23:30:59] 
+[23:30:59] 解决方案：
+[23:30:59] 1. 关闭所有浏览器窗口（Chrome、Edge 等）
+[23:30:59] 2. 重新运行下载脚本（尝试自动获取 cookies）
+[23:30:59] 
+[23:30:59] 或者手动获取 cookies：
+[23:30:59] 1. 安装浏览器扩展 'Get cookies.txt LOCALLY'
+[23:30:59] 2. 访问 YouTube 并登录您的账号
+[23:30:59] 3. 点击扩展图标，下载 cookies.txt
+[23:30:59] 4. 将 cookies.txt 保存到: D:\YT_Market_Tool\cookies.txt
+[23:30:59] 5. 运行命令: yt-dlp --cookies D:\YT_Market_Tool\cookies.txt -o D:\YT_Market_Tool\youtube-clips\%(id)s.mp4 https://youtu.be/jKr9Omaf3Gs
+[23:30:59] ============================================================
+[00:23:08] ✅ yt-dlp 已安装
+[00:23:08] 🎬 开始下载视频
+[00:23:08] URL: https://youtu.be/jKr9Omaf3Gs
+[00:23:08] 输出目录: D:\YT_Market_Tool\youtube-clips
+[00:23:08] 🍪 使用 cookies 文件: D:\YT_Market_Tool\cookies.txt
+[00:23:08] 📊 获取视频信息...
+[00:23:35] ❌ 下载失败: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[00:23:35] Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1696, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1831, in __extract_info
+    ie_result = ie.extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 762, in extract
+    ie_result = self._real_extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_video.py", line 3910, in _real_extract
+    self.raise_no_formats(reason, expected=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 1274, in raise_no_formats
+    raise ExtractorError(msg, expected=expected, video_id=video_id)
+yt_dlp.utils.ExtractorError: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\YT_Market_Tool\download_with_cookies.py", line 63, in <module>
+    info = ydl.extract_info(url, download=False)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1685, in extract_info
+    return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1714, in wrapper
+    self.report_error(str(e), e.format_traceback())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+[00:25:22] ✅ yt-dlp 已安装
+[00:25:22] 🎬 开始下载视频
+[00:25:22] URL: https://youtu.be/jKr9Omaf3Gs
+[00:25:22] 输出目录: D:\YT_Market_Tool\youtube-clips
+[00:25:22] 🍪 使用 cookies 文件: D:\YT_Market_Tool\youtube-work\cookies.txt
+[00:25:22] 📊 获取视频信息...
+[00:25:30] ❌ 下载失败: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[00:25:30] Traceback (most recent call last):
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1696, in wrapper
+    return func(self, *args, **kwargs)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1831, in __extract_info
+    ie_result = ie.extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 762, in extract
+    ie_result = self._real_extract(url)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\youtube\_video.py", line 3910, in _real_extract
+    self.raise_no_formats(reason, expected=True)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\extractor\common.py", line 1274, in raise_no_formats
+    raise ExtractorError(msg, expected=expected, video_id=video_id)
+yt_dlp.utils.ExtractorError: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\YT_Market_Tool\download_with_cookies.py", line 63, in <module>
+    info = ydl.extract_info(url, download=False)
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1685, in extract_info
+    return self.__extract_info(url, self.get_info_extractor(key), download, extra_info, process)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1714, in wrapper
+    self.report_error(str(e), e.format_traceback())
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1154, in report_error
+    self.trouble(f'{self._format_err("ERROR:", self.Styles.ERROR)} {message}', *args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\伟杰\AppData\Local\Programs\Python\Python314\Lib\site-packages\yt_dlp\YoutubeDL.py", line 1093, in trouble
+    raise DownloadError(message, exc_info)
+yt_dlp.utils.DownloadError: [0;31mERROR:[0m [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+

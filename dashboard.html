@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>油管挖掘机 Pro Max</title>
+    <style>
+        :root {
+            --bg-body: #1e1e1e;
+            --bg-panel: #252526;
+            --bg-input: #3c3c3c;
+            --text-main: #d4d4d4;
+            --text-muted: #aaa;
+            --border-color: #333;
+            --border-input: #555;
+            --accent-green: #4CAF50;
+            --accent-green-hover: #45a049;
+            --accent-red: #e53935;
+            --accent-red-hover: #d32f2f;
+            --accent-blue: #2196F3;
+            --link-blue: #64B5F6;
+        }
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        /* 顶部面板布局 */
+        .panel {
+            background: var(--bg-panel);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .config-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        /* 输入框样式 */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        label { font-size: 12px; color: var(--text-muted); }
+        input[type="number"], input[type="text"], select {
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            width: 100px;
+        }
+        /* 特殊宽度定义 */
+        #fileInput { width: 200px; }
+        #dayLimit { width: 80px; }
+        #presetSelect { width: 140px; cursor: pointer; }
+        #keywordFilter { width: 100px; }
+        .flex-row-center { display: flex; gap: 5px; align-items: center; }
+
+        /* 按钮组 */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            border: none;
+            padding: 10px 25px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+        #startBtn { background: var(--accent-green); color: white; }
+        #startBtn:hover { background: var(--accent-green-hover); }
+        
+        #stopBtn { background: var(--accent-red); color: white; }
+        #stopBtn:hover { background: var(--accent-red-hover); }
+        #stopBtn:disabled { background: #555; cursor: not-allowed; opacity: 0.5; }
+
+        #exportBtn { background: var(--accent-blue); color: white; }
+        #exportBtn:disabled { background: #555; cursor: not-allowed; }
+        #resetBtn { background: #555; color: white; }
+        #resetBtn:hover { background: #666; }
+
+        /* 进度条 */
+        .progress-container {
+            background: var(--border-color);
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-green), #8BC34A);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 2px;
+            font-size: 12px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        /* 日志窗口 */
+        #logWindow {
+            background: #000;
+            border: 1px solid var(--border-input);
+            height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        .log-time { color: #888; margin-right: 10px; }
+        .log-success { color: var(--accent-green); }
+        .log-warn { color: #FFC107; }
+        .log-error { color: #FF5252; }
+        .log-info { color: var(--link-blue); }
+        .log-skip { color: #757575; font-style: italic; }
+
+        /* 开关样式 */
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--border-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        /* 快捷按钮样式 */
+        .quick-btn {
+            background: #444;
+            color: var(--text-muted);
+            border: 1px solid var(--border-input);
+            padding: 4px 10px;
+            font-size: 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quick-btn:hover {
+            background: #555;
+            color: white;
+        }
+
+        /* 结果表格样式 */
+        #resultSection {
+            display: none;
+            margin-top: 20px;
+        }
+        #resultSection.visible {
+            display: block;
+        }
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: var(--bg-panel);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .result-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .result-controls input,
+        .result-controls select {
+            background: var(--bg-input);
+            border: 1px solid var(--border-input);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .result-table-container {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        .result-table thead {
+            background: var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .result-table th {
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 1px solid #444;
+            cursor: pointer;
+            user-select: none;
+        }
+        .result-table th:hover {
+            background: var(--bg-input);
+            color: white;
+        }
+        .result-table th.sort-asc::after {
+            content: " ▲";
+            font-size: 10px;
+        }
+        .result-table th.sort-desc::after {
+            content: " ▼";
+            font-size: 10px;
+        }
+        .result-table tbody {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .result-table td {
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        .result-table tr:hover {
+            background: #2d2d2d;
+        }
+        .result-table a {
+            color: var(--link-blue);
+            text-decoration: none;
+        }
+        .result-table a:hover {
+            text-decoration: underline;
+        }
+        .score-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .score-high { background: var(--accent-green); color: white; }
+        .score-medium { background: #FF9800; color: white; }
+        .score-low { background: #555; color: #aaa; }
+        /* Thumbnail column with hover effect and duration overlay */
+        .thumbnail-cell {
+            width: 100px;
+            position: relative;
+        }
+        .thumbnail-wrapper {
+            position: relative;
+            width: 80px;
+            height: 45px;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .thumbnail-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+        .thumbnail-wrapper:hover img {
+            transform: scale(1.15);
+        }
+        .thumbnail-wrapper:hover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+        /* Duration overlay on thumbnail */
+        .duration-badge {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        /* Status icons column */
+        .status-cell {
+            text-align: center;
+            width: 60px;
+            font-size: 16px;
+        }
+        .status-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #333;
+            cursor: help;
+            transition: all 0.2s;
+        }
+        .status-icon:hover {
+            transform: scale(1.1);
+        }
+        .status-icon.fire {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+        }
+        .status-icon.thumbs-up {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+        }
+        .status-icon.neutral {
+            background: #444;
+        }
+
+        /* Download button */
+        .download-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .download-btn:hover {
+            background: #1976D2;
+        }
+
+        /* Relative time display */
+        .time-cell {
+            font-size: 11px;
+            color: var(--text-muted);
+            cursor: help;
+        }
+        .time-cell:hover {
+            color: var(--text-main);
+        }
+
+        /* Clickable row */
+        .result-table tbody tr {
+            cursor: pointer;
+        }
+        .result-table tbody tr:hover {
+            background: #2a2a2a;
+        }
+        .result-table tbody tr:active {
+            background: #333;
+        }
+
+        /* Remove link button styling */
+        .link-cell {
+            display: none;
+        }
+
+        /* 任务状态条样式 */
+        .task-status-bar {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .task-status-bar.visible {
+            display: block;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        .status-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .status-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .status-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .status-value.highlight {
+            color: var(--accent-green);
+        }
+        .status-value.warning {
+            color: #FF9800;
+        }
+        .status-value.error {
+            color: var(--accent-red);
+        }
+        .status-value.neutral {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h2>🚜 油管挖掘机 Pro Max</h2>
+
+    <div class="panel">
+        <div class="config-row">
+            <div class="input-group">
+                <label>1. 上传 Excel (第一列为剧名)</label>
+                <input type="file" id="fileInput" accept=".xlsx">
+            </div>
+
+            <div class="input-group">
+                <label>最低播放量 (例如 10000)</label>
+                <input type="number" id="minViews" value="0" placeholder="0 = 不限">
+            </div>
+
+            <div class="input-group">
+                <label>最近 N 天发布</label>
+                <div class="flex-row-center">
+                    <input type="number" id="dayLimit" value="0" placeholder="例如 30">
+                    <div class="quick-btns" style="display: flex; gap: 3px;">
+                        <button type="button" class="quick-btn" data-value="7">7</button>
+                        <button type="button" class="quick-btn" data-value="30">30</button>
+                        <button type="button" class="quick-btn" data-value="60">60</button>
+                        <button type="button" class="quick-btn" data-value="90">90</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>预设（行业默认）</label>
+                <select id="presetSelect">
+                    <option value="">-- 选择预设 --</option>
+                    <option value="drama">短剧/泛娱乐（长视频）</option>
+                    <option value="shorts">Shorts（短视频）</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>每关键词抓取上限</label>
+                <input type="number" id="maxPerKeyword" value="50" min="1" max="200" placeholder="默认 50">
+            </div>
+
+            <div class="input-group">
+                <label>最短视频时长-分钟 (例如 10)</label>
+                <input type="number" id="minDuration" value="0" min="0" placeholder="0 = 不限">
+            </div>
+
+            <div class="toggle-switch">
+                <input type="checkbox" id="deepMode">
+                <label for="deepMode" style="color: var(--accent-green); cursor: pointer;">⚡ 深度模式 (抓取排名第一视频的评论/详情)</label>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button id="startBtn">▶ 开始采集</button>
+            <button id="stopBtn" disabled>⏹ 停止运行</button>
+            <button id="exportBtn" disabled>💾 导出结果</button>
+            <button id="resetBtn">🔄 恢复默认</button>
+            <button id="monitorBtn" style="background: #9C27B0;">🎯 对标账号监控</button>
+        </div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progFill"></div>
+        <div class="progress-text" id="progText">等待开始...</div>
+    </div>
+
+    <!-- 任务状态条 -->
+    <div class="task-status-bar" id="taskStatusBar">
+        <div class="status-grid">
+            <div class="status-item">
+                <span class="status-label">总进度</span>
+                <span class="status-value highlight" id="statusTotalProgress">0 / 0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">当前关键词</span>
+                <span class="status-value neutral" id="statusCurrentKeyword">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">当前抓取</span>
+                <span class="status-value neutral" id="statusCurrentCount">0 / 50</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">失败 / 最近原因</span>
+                <span class="status-value" id="statusFailure">0 / -</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="logWindow">系统就绪。请上传 Excel 文件，设置筛选条件（可选），然后点击开始。</div>
+
+    <!-- 结果表格预览区域 -->
+    <div id="resultSection">
+        <div class="result-header">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="font-weight: bold; color: var(--accent-green);">📊 结果预览</span>
+                <span id="resultCount" style="color: #888; font-size: 12px;">共 0 条</span>
+            </div>
+            <div class="result-controls">
+                <label style="color: #aaa; font-size: 12px; margin: 0;">关键词筛选:</label>
+                <input type="text" id="keywordFilter" placeholder="全部">
+                <label style="color: #aaa; font-size: 12px; margin: 0;">排序:</label>
+                <select id="sortSelect">
+                    <option value="score-desc">Score (高→低)</option>
+                    <option value="views-desc">播放量 (高→低)</option>
+                    <option value="date-desc">发布时间 (新→旧)</option>
+                </select>
+                <button id="refreshTable" style="padding: 5px 15px; font-size: 12px;">🔄 刷新</button>
+            </div>
+        </div>
+        <div class="result-table-container">
+            <div style="max-height: 400px; overflow-y: auto;">
+                <table class="result-table" id="resultTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="keyword">关键词</th>
+                            <th>封面</th>
+                            <th data-sort="title">标题</th>
+                            <th data-sort="channel">频道</th>
+                            <th data-sort="views">播放</th>
+                            <th data-sort="likes">点赞</th>
+                            <th data-sort="comments">评论</th>
+                            <th data-sort="likeRate">点赞率</th>
+                            <th data-sort="commentRate">评论率</th>
+                            <th data-sort="date">发布时间</th>
+                            <th data-sort="score">Score</th>
+                            <th>状态</th>
+                            <th>下载</th>
+                            <th class="link-cell">链接</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTableBody">
+                        <tr>
+                            <td colspan="13" style="text-align: center; color: #666; padding: 40px;">
+                                暂无数据，开始采集后将在此显示结果
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="xlsx.full.min.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

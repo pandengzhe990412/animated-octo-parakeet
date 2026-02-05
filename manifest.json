@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "油管短剧挖掘机 Pro",
+  "version": "2.1",
+  "description": "独立控制台版，支持后台稳定运行、对标账号监控",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "notifications",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://www.youtube.com/feeds/videos.xml*"
+  ],
+  "icons": {
+    "128": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

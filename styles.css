@@ -1,0 +1,77 @@
+body {
+    width: 320px;
+    font-family: 'Microsoft YaHei', sans-serif;
+    padding: 15px;
+    background-color: #f4f4f9;
+}
+
+h2 {
+    text-align: center;
+    color: #ff0000; /* 油管红 */
+    margin-top: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.step-box {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.step-box p {
+    margin: 0 0 8px 0;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#startBtn {
+    background-color: #ff0000;
+    color: white;
+}
+
+#startBtn:hover {
+    background-color: #cc0000;
+}
+
+#startBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#exportBtn {
+    background-color: #4CAF50; /* 绿色 */
+    color: white;
+    margin-top: 10px;
+}
+
+#exportBtn:disabled {
+    display: none;
+}
+
+#logArea {
+    background: #333;
+    color: #0f0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 80px;
+    overflow-y: auto;
+    font-family: monospace;
+}

@@ -1,0 +1,78 @@
+[youtube] Extracting URL: https://youtu.be/jKr9Omaf3Gs?si=vkDJoZEuaKw1Q1UT
+============================================================
+Attempting download with multiple bypass methods...
+============================================================
+
+============================================================
+Trying Method 1: Basic with no-age-limit...
+============================================================
+
+Extracting video info...
+[youtube] jKr9Omaf3Gs: Downloading webpage
+WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to your command/config. YouTube extraction without a JS runtime has been deprecated, and some formats may be missing. See  https://github.com/yt-dlp/yt-dlp/wiki/EJS  for details on installing one
+[youtube] jKr9Omaf3Gs: Downloading android sdkless player API JSON
+[youtube] jKr9Omaf3Gs: Downloading web safari player API JSON
+WARNING: [youtube] [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081). Retrying (1/3)...
+[youtube] jKr9Omaf3Gs: Downloading web safari player API JSON
+WARNING: [youtube] [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081). Retrying (2/3)...
+[youtube] jKr9Omaf3Gs: Downloading web safari player API JSON
+WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing
+ERROR: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[youtube] Extracting URL: https://youtu.be/jKr9Omaf3Gs?si=vkDJoZEuaKw1Q1UT
+
+Failed with Method 1: Basic with no-age-limit: ERROR: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-
+Trying next method...
+
+
+============================================================
+Trying Method 2: With user agent...
+============================================================
+
+Extracting video info...
+[youtube] jKr9Omaf3Gs: Downloading webpage
+WARNING: [youtube] No supported JavaScript runtime could be found. Only deno is enabled by default; to use another runtime add  --js-runtimes RUNTIME[:PATH]  to your command/config. YouTube extraction without a JS runtime has been deprecated, and some formats may be missing. See  https://github.com/yt-dlp/yt-dlp/wiki/EJS  for details on installing one
+[youtube] jKr9Omaf3Gs: Downloading android sdkless player API JSON
+WARNING: [youtube] _ssl.c:1063: The handshake operation timed out. Retrying (1/3)...
+[youtube] jKr9Omaf3Gs: Downloading android sdkless player API JSON
+[youtube] jKr9Omaf3Gs: Downloading web safari player API JSON
+WARNING: [youtube] [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1081). Retrying (1/3)...
+[youtube] jKr9Omaf3Gs: Downloading web safari player API JSON
+WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing
+ERROR: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+[youtube] Extracting URL: https://youtu.be/jKr9Omaf3Gs?si=vkDJoZEuaKw1Q1UT
+
+Failed with Method 2: With user agent: ERROR: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-
+Trying next method...
+
+
+============================================================
+Trying Method 3: With extract flat...
+============================================================
+
+Extracting video info...
+[youtube] jKr9Omaf3Gs: Downloading webpage
+[youtube] jKr9Omaf3Gs: Downloading android player API JSON
+WARNING: [youtube] No title found in player responses; falling back to title from initial data. Other metadata may also be missing
+ERROR: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+
+Failed with Method 3: With extract flat: ERROR: [youtube] jKr9Omaf3Gs: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-
+Trying next method...
+
+
+============================================================
+ALL METHODS FAILED - YouTube requires authentication
+============================================================
+
+YouTube is blocking automated downloads. You have a few options:
+
+1. MANUAL COOKIE EXPORT (Recommended):
+   - Install the 'Get cookies.txt' extension in your browser
+   - Visit YouTube and sign in
+   - Export cookies to a file
+   - Use: yt-dlp --cookies cookies.txt [URL]
+
+2. Use a VPN to change your IP address
+
+3. Wait some time and try again (rate limiting)
+
+4. Try from a different network
