@@ -33,7 +33,6 @@ import {
   Sparkles,
   Strikethrough,
   Table2,
-  Upload,
   Wand2,
   X,
 } from "lucide-react"
@@ -779,12 +778,6 @@ const Sidepanel = () => {
     loadFromStorage(APP_CONFIG.storageKeys.qrImageUrl, "")
   )
   const [isContactOpen, setIsContactOpen] = useState(false)
-  const [contactWechatQrDataUrl, setContactWechatQrDataUrl] = useState<string>(() =>
-    loadFromStorage(
-      APP_CONFIG.storageKeys.contactWechatQrDataUrl,
-      APP_CONFIG.contact.wechatQrImageUrl
-    )
-  )
   const [copySuccess, setCopySuccess] = useState(false)
   const [isCopying, setIsCopying] = useState(false)
   const [isCheckingImages, setIsCheckingImages] = useState(false)
@@ -859,10 +852,6 @@ const Sidepanel = () => {
   useEffect(() => {
     saveToStorage(APP_CONFIG.storageKeys.qrImageUrl, qrImageUrl)
   }, [qrImageUrl])
-
-  useEffect(() => {
-    saveToStorage(APP_CONFIG.storageKeys.contactWechatQrDataUrl, contactWechatQrDataUrl)
-  }, [contactWechatQrDataUrl])
 
   useEffect(() => {
     if (!copySuccess) {
@@ -1159,28 +1148,6 @@ const Sidepanel = () => {
     }
   }, [])
 
-  const handleContactQrUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    event.target.value = ""
-
-    if (!file) {
-      return
-    }
-
-    if (!file.type.startsWith("image/")) {
-      alert("请选择图片文件。")
-      return
-    }
-
-    const reader = new FileReader()
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setContactWechatQrDataUrl(reader.result)
-      }
-    }
-    reader.readAsDataURL(file)
-  }, [])
-
   const themeKeys = useMemo(() => Object.keys(themes) as ThemeKey[], [])
   const intensityKeys = useMemo(() => Object.keys(intensityProfiles) as IntensityKey[], [])
   const emphasisModeKeys = useMemo(() => Object.keys(emphasisModes) as EmphasisMode[], [])
@@ -1221,8 +1188,7 @@ const Sidepanel = () => {
         : "已通过"
   const publishStatusClass =
     blockingChecks.length > 0 ? "risk" : warningChecks.length > 0 ? "warning" : "safe"
-  const contactWechatQrSrc =
-    contactWechatQrDataUrl.trim() || APP_CONFIG.contact.wechatQrImageUrl.trim()
+  const contactWechatQrSrc = APP_CONFIG.contact.wechatQrImageUrl.trim()
   const hasWechatId = Boolean(APP_CONFIG.contact.wechatId.trim())
   const hasGithub = Boolean(APP_CONFIG.contact.github.trim())
 
@@ -1511,7 +1477,7 @@ const Sidepanel = () => {
                   ) : (
                     <div className="contact-qr-empty">
                       <ImageIcon size={24} />
-                      <span>等待上传二维码</span>
+                      <span>二维码未配置</span>
                     </div>
                   )}
                 </div>
@@ -1520,24 +1486,9 @@ const Sidepanel = () => {
                   <p className="contact-qr-note">
                     {hasWechatId
                       ? `微信号：${APP_CONFIG.contact.wechatId}`
-                      : "你可以点下方按钮上传图2二维码。"}
+                      : "未填写微信号，建议在配置中补充。"}
                   </p>
                 </div>
-              </div>
-
-              <div className="contact-upload-row">
-                <label className="contact-upload-button" htmlFor="contact-qr-upload">
-                  <Upload size={14} />
-                  上传微信二维码
-                </label>
-                <input
-                  id="contact-qr-upload"
-                  className="contact-upload-input"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleContactQrUpload}
-                />
-                <span className="contact-upload-hint">支持 PNG/JPG，上传后自动保存到本地。</span>
               </div>
 
               <div className="contact-shortcuts">

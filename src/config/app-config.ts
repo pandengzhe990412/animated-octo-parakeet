@@ -10,7 +10,6 @@ export const APP_CONFIG = {
     brandName: "gongzhonghao.brandName",
     brandSlogan: "gongzhonghao.brandSlogan",
     qrImageUrl: "gongzhonghao.qrImageUrl",
-    contactWechatQrDataUrl: "gongzhonghao.contactWechatQrDataUrl",
   },
   clipboard: {
     successFlashMs: 1800,
@@ -18,8 +17,9 @@ export const APP_CONFIG = {
   contact: {
     email: "your-email@example.com",
     github: "",
-    wechatId: "",
-    wechatQrImageUrl: "",
+    wechatId: "18781101119",
+    // 固定作者二维码静态资源路径（前端无上传/修改入口）
+    wechatQrImageUrl: "./contact-wechat-qr.png",
   },
   message: {
     copyEmpty: "请先输入或粘贴要转换的内容。",
