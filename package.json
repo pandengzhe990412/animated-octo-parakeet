@@ -1,0 +1,62 @@
+{
+  "name": "gongzhonghao",
+  "displayName": "飞书文档转公众号助手",
+  "version": "0.1.0",
+  "description": "AI-powered tool to convert Feishu/Lark documents to WeChat Official Account articles",
+  "author": "Your Name",
+  "packageManager": "pnpm@8.15.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "dev:ext": "plasmo dev",
+    "build:ext": "plasmo build",
+    "package:ext": "plasmo package",
+    "dev:watch": "plasmo dev --watch",
+    "generate-icons": "node scripts/generate-icons.js",
+    "clean": "node scripts/clean.js"
+  },
+  "dependencies": {
+    "@plasmohq/storage": "^1.12.0",
+    "clsx": "^2.1.0",
+    "juice": "^10.0.0",
+    "lucide-react": "^0.344.0",
+    "markdown-it": "^14.0.0",
+    "plasmo": "^0.87.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tailwind-merge": "^2.2.1",
+    "turndown": "^7.1.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.0",
+    "@types/chrome": "^0.0.258",
+    "@types/node": "^20.11.5",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "@types/turndown": "^5.0.4",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^7.1.10"
+  },
+  "manifest": {
+    "host_permissions": [
+      "https://*.feishu.cn/*",
+      "https://*.larksuite.com/*",
+      "https://*.qq.com/*"
+    ],
+    "permissions": [
+      "activeTab",
+      "clipboardWrite",
+      "sidepanel",
+      "storage",
+      "scripting"
+    ],
+    "side_panel": {
+      "default_path": "sidepanel.html"
+    }
+  }
+}
