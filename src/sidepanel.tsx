@@ -243,6 +243,19 @@ function normalizeExtractedUrl(rawUrl: string): string {
   return rawUrl.trim().replace(/^</, "").replace(/>$/, "")
 }
 
+function isInternalDriveImageUrl(url: string): boolean {
+  if (!/^https?:\/\//i.test(url)) {
+    return false
+  }
+
+  try {
+    const parsed = new URL(url)
+    return parsed.hostname.toLowerCase().startsWith("internal-api-drive-stream.")
+  } catch {
+    return false
+  }
+}
+
 function extractMarkdownImageUrls(markdown: string): string[] {
   const urls = new Set<string>()
 
@@ -962,6 +975,16 @@ const Sidepanel = () => {
           locateText: url.slice(0, 60),
         })
       })
+
+    imageUrls.filter(isInternalDriveImageUrl).forEach((url, index) => {
+      checks.push({
+        id: `internal-drive-image-${index}`,
+        level: "warning",
+        title: "检测到飞书内部图片链接",
+        detail: "该链接可能仅飞书登录态可见，公众号预览可能不显示，建议重新复制飞书原文后再粘贴。",
+        locateText: url,
+      })
+    })
 
     oversizedImages.forEach((image) => {
       checks.push({

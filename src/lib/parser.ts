@@ -51,44 +51,197 @@ function shouldRemoveNode(node: Node): boolean {
   return false
 }
 
-/**
- * Extract high-resolution image URL from Feishu img elements
- */
-function extractImageUrl(img: HTMLImageElement): string {
-  // Priority 1: data-src (usually contains the original high-res image)
-  const dataSrc = img.getAttribute("data-src")
-  if (dataSrc && dataSrc.startsWith("http")) {
-    return dataSrc
+function normalizeImageUrl(rawUrl: string): string {
+  const trimmed = rawUrl.trim().replace(/&amp;/g, "&").replace(/\s+/g, "")
+  if (!trimmed) {
+    return ""
   }
 
-  // Priority 2: data-original-src
-  const originalSrc = img.getAttribute("data-original-src")
-  if (originalSrc && originalSrc.startsWith("http")) {
-    return originalSrc
+  if (trimmed.startsWith("data:image/")) {
+    return trimmed
   }
 
-  // Priority 3: srcset with high-res option
-  if (img.srcset) {
-    const sources = img.srcset.split(",").map((s) => s.trim())
-    // Get the largest image from srcset
-    const highResSource = sources.sort((a, b) => {
-      const aSize = parseInt(a.split(" ").pop() || "0")
-      const bSize = parseInt(b.split(" ").pop() || "0")
-      return bSize - aSize
-    })[0]
-    if (highResSource) {
-      return highResSource.split(" ")[0]
+  if (trimmed.startsWith("//")) {
+    return `https:${trimmed}`
+  }
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed
+  }
+
+  return ""
+}
+
+function extractSrcsetUrls(srcset: string): string[] {
+  return srcset
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => item.split(/\s+/)[0])
+    .filter(Boolean)
+}
+
+function detectFeishuOrigin(html: string): string {
+  const matches = html.matchAll(/https:\/\/([a-z0-9-]+\.(?:feishu\.cn|larksuite\.com))/gi)
+  for (const match of matches) {
+    const host = (match[1] || "").toLowerCase()
+    if (!host || host.startsWith("internal-api-drive-stream.")) {
+      continue
+    }
+    return `https://${host}`
+  }
+  return ""
+}
+
+function toAsyncCodeUrl(rawUrl: string, feishuOrigin: string): string {
+  const normalized = normalizeImageUrl(rawUrl)
+  if (!normalized) {
+    return ""
+  }
+
+  try {
+    const parsed = new URL(normalized)
+    const host = parsed.hostname.toLowerCase()
+    const code = parsed.searchParams.get("code")?.trim() || ""
+    const isInternalDriveApi = host.startsWith("internal-api-drive-stream.")
+
+    if (code && (isInternalDriveApi || parsed.pathname.includes("/space/api/box/stream/download/"))) {
+      const origin = feishuOrigin || `${parsed.protocol}//${parsed.host}`
+      return `${origin}/space/api/box/stream/download/asynccode/?code=${encodeURIComponent(code)}`
+    }
+  } catch {
+    return normalized
+  }
+
+  return normalized
+}
+
+function scoreImageUrl(url: string): number {
+  if (!url) {
+    return -1
+  }
+
+  if (url.startsWith("data:image/")) {
+    return 80
+  }
+
+  try {
+    const parsed = new URL(url)
+    const host = parsed.hostname.toLowerCase()
+    const isInternalDriveApi = host.startsWith("internal-api-drive-stream.")
+    const isAsyncCode = parsed.pathname.includes("/space/api/box/stream/download/asynccode/")
+
+    if (isAsyncCode) {
+      return 120
+    }
+
+    if (isInternalDriveApi) {
+      return 10
+    }
+
+    if (parsed.protocol === "https:") {
+      return 70
+    }
+  } catch {
+    return 0
+  }
+
+  return 0
+}
+
+function sanitizeMarkdownImageUrl(url: string): string {
+  return url.trim().replace(/^</, "").replace(/>$/, "").replace(/\s+/g, "")
+}
+
+function normalizeMarkdownImageBlocks(markdown: string): string {
+  const imagePattern = /!\[[^\]]*]\(([^)\s]+)\)/g
+  const lines = markdown.split(/\r?\n/)
+  const output: string[] = []
+
+  const pushImageLine = (rawUrl: string) => {
+    const safeUrl = sanitizeMarkdownImageUrl(rawUrl)
+    if (!safeUrl) {
+      return
+    }
+    if (output.length > 0 && output[output.length - 1].trim() !== "") {
+      output.push("")
+    }
+    output.push(`![](${safeUrl})`)
+    output.push("")
+  }
+
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed) {
+      output.push("")
+      continue
+    }
+
+    const matches = [...trimmed.matchAll(imagePattern)]
+    if (!matches.length) {
+      output.push(line)
+      continue
+    }
+
+    const hasTableSyntax = trimmed.includes("|")
+    const isPureSingleImage = matches.length === 1 && matches[0][0] === trimmed
+
+    if (hasTableSyntax || matches.length > 1 || isPureSingleImage) {
+      for (const match of matches) {
+        pushImageLine(match[1] || "")
+      }
+      continue
+    }
+
+    if (matches.length === 1) {
+      const imageToken = matches[0][0]
+      const remainingText = trimmed.replace(imageToken, "").trim()
+      if (remainingText) {
+        output.push(remainingText)
+      }
+      pushImageLine(matches[0][1] || "")
     }
   }
 
-  // Priority 4: Regular src
-  if (img.src && img.src.startsWith("http")) {
-    // Try to convert thumbnail URLs to full-size URLs
-    // Feishu thumbnail URLs often contain thumbnail parameters
-    return img.src.replace(/thumbnail\/\d+/, "original")
+  return output
+    .join("\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim()
+}
+
+/**
+ * Extract the most stable image URL for WeChat publishing.
+ * Prefer async-code URLs, avoid internal-api-drive-stream URLs.
+ */
+function extractImageUrl(img: HTMLImageElement, feishuOrigin: string): string {
+  const candidates: string[] = []
+  const src = img.getAttribute("src")
+  const dataSrc = img.getAttribute("data-src")
+  const originalSrc = img.getAttribute("data-original-src")
+
+  if (dataSrc) candidates.push(dataSrc)
+  if (originalSrc) candidates.push(originalSrc)
+  if (src) candidates.push(src)
+  if (img.srcset) candidates.push(...extractSrcsetUrls(img.srcset))
+  if (img.currentSrc) candidates.push(img.currentSrc)
+  if (img.src) candidates.push(img.src)
+
+  const normalized = [...new Set(candidates.map((item) => toAsyncCodeUrl(item, feishuOrigin)).filter(Boolean))]
+  if (!normalized.length) {
+    return ""
   }
 
-  return img.src || ""
+  let best = normalized[0]
+  let bestScore = scoreImageUrl(best)
+  for (const candidate of normalized.slice(1)) {
+    const score = scoreImageUrl(candidate)
+    if (score > bestScore) {
+      best = candidate
+      bestScore = score
+    }
+  }
+
+  return best
 }
 
 /**
@@ -117,7 +270,7 @@ function cleanHTML(html: string): string {
 }
 
 // Configure Turndown with custom rules for Feishu-specific elements
-const createTurndownService = (): TurndownService => {
+const createTurndownService = (feishuOrigin: string): TurndownService => {
   const turndownService = new TurndownService({
     headingStyle: "atx",
     hr: "---",
@@ -153,9 +306,11 @@ const createTurndownService = (): TurndownService => {
     },
     replacement: (_content, node) => {
       const img = node as HTMLImageElement
-      const src = extractImageUrl(img)
-      const alt = img.alt || ""
-      return `\n![${alt}](${src})\n`
+      const src = extractImageUrl(img, feishuOrigin)
+      if (!src) {
+        return "\n"
+      }
+      return `\n\n![](${src})\n\n`
     },
   })
 
@@ -171,9 +326,11 @@ const createTurndownService = (): TurndownService => {
     replacement: (content, node) => {
       const img = (node as HTMLElement).querySelector("img")
       if (img) {
-        const src = extractImageUrl(img)
-        const alt = img.alt || ""
-        return `\n![${alt}](${src})\n`
+        const src = extractImageUrl(img, feishuOrigin)
+        if (!src) {
+          return content
+        }
+        return `\n\n![](${src})\n\n`
       }
       return content
     },
@@ -296,22 +453,17 @@ const createTurndownService = (): TurndownService => {
   return turndownService
 }
 
-// Singleton instance
-let turndownService: TurndownService | null = null
-
 /**
  * Convert HTML content to Markdown
  * @param html - The HTML string to convert
  * @returns Markdown string
  */
 export function htmlToMarkdown(html: string): string {
-  if (!turndownService) {
-    turndownService = createTurndownService()
-  }
-
   try {
     // Clean the HTML first to remove redundant nodes
     const cleanedHTML = cleanHTML(html)
+    const feishuOrigin = detectFeishuOrigin(cleanedHTML) || detectFeishuOrigin(html)
+    const turndownService = createTurndownService(feishuOrigin)
     const markdown = turndownService.turndown(cleanedHTML)
     return cleanMarkdown(markdown)
   } catch (error) {
@@ -325,7 +477,7 @@ export function htmlToMarkdown(html: string): string {
  * Removes excessive blank lines and normalizes spacing
  */
 function cleanMarkdown(markdown: string): string {
-  return (
+  const normalized = (
     markdown
       // Remove more than 2 consecutive blank lines
       .replace(/\n{3,}/g, "\n\n")
@@ -335,6 +487,8 @@ function cleanMarkdown(markdown: string): string {
       .join("\n")
       .trim()
   )
+
+  return normalizeMarkdownImageBlocks(normalized)
 }
 
 /**
