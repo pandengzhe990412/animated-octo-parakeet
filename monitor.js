@@ -1108,7 +1108,12 @@ function renderTable(tbodyId, data, countId) {
                 <td>${published}</td>
                 <td><span class="score-badge ${scoreClass}">${score}</span></td>
                 <td style="max-width: 200px; font-size: 11px; color: #888;" title="${escapeHtml(reason)}">${escapeHtml(reason.substring(0, 35))}${reason.length > 35 ? '...' : ''}</td>
-                <td>${link ? `<a href="${safeLink}" target="_blank">打开</a>` : ''}</td>
+                <td>
+                    ${link ? `
+                        <a href="${safeLink}" target="_blank" style="margin-right: 8px;">▶ 打开</a>
+                        <a href="https://ytdown.to/watch?v=${link.split('v=')[1]?.split('&')[0] || ''}" target="_blank" style="color: #4CAF50;">⬇️ 下载</a>
+                    ` : ''}
+                </td>
             </tr>
         `;
     }).join('');

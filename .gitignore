@@ -1,0 +1,51 @@
+# 下载的视频文件
+youtube-clips/
+youtube-work/
+*.mp4
+*.mp3
+*.webm
+*.mkv
+
+# 日志文件
+*.log
+*.txt
+download_log*.txt
+download_long_video_log.txt
+download_status.txt
+download_result.json
+DOWNLOAD_STATUS_REPORT.md
+
+# 临时文件
+file_list.txt
+SUMMARY.txt
+video_info.json
+
+# Cookies 和敏感信息
+cookies.txt
+*.cookies
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node modules（如果有）
+node_modules/

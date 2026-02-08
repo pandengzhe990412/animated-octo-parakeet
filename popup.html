@@ -3,22 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        body { 
-            width: 200px; padding: 15px; text-align: center; 
+        body {
+            width: 280px; padding: 15px; text-align: center;
             background-color: #1e1e1e; color: #d4d4d4; font-family: 'Segoe UI', sans-serif;
         }
-        h3 { margin-top: 0; color: #fff; }
-        button { 
-            background: #4CAF50; color: white; border: none; 
-            padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold;
-            width: 100%; transition: background 0.2s;
+        h3 { margin-top: 0; color: #fff; font-size: 16px; }
+        .input-group {
+            margin-bottom: 12px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background: #3c3c3c;
+            color: #d4d4d4;
+            font-size: 12px;
+            box-sizing: border-box;
+        }
+        input::placeholder { color: #888; }
+        button {
+            background: #4CAF50; color: white; border: none;
+            padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold;
+            width: 100%; transition: background 0.2s; margin-bottom: 8px;
+            font-size: 13px;
         }
         button:hover { background: #45a049; }
+        .btn-blue { background: #2196F3; }
+        .btn-blue:hover { background: #1976D2; }
+        .hint { font-size: 10px; color: #888; margin-top: 5px; }
     </style>
 </head>
 <body>
-    <h3>🚀 启动中心</h3>
-    <button id="openDash">打开独立控制台</button>
+    <h3>🚀 快速下载</h3>
+    <div class="input-group">
+        <input type="text" id="videoUrl" placeholder="粘贴 YouTube 链接...">
+    </div>
+    <button id="downloadOnline">📥 在线下载</button>
+    <button id="openDash" class="btn-blue">打开控制台</button>
+    <p class="hint">支持 YouTube 视频/Shorts</p>
     <script src="popup.js"></script>
 </body>
 </html>

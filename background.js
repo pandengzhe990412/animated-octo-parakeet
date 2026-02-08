@@ -256,7 +256,11 @@ function checkAlertRules(video) {
 async function sendMonitorNotification(alerts) {
     const count = alerts.length;
     const title = `发现 ${count} 个对标新视频`;
-    const message = alerts.slice(0, 3).map(a => a.channel.title || a.channel.channelId).join('、');
+    const message = alerts.slice(0, 3).map(a => {
+        const channel = a.channel;
+        const displayName = channel?.title || channel?.channelId || '未知频道';
+        return displayName;
+    }).join('、');
     const more = count > 3 ? `等${count}个频道` : '';
 
     try {

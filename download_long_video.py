@@ -2,21 +2,52 @@
 """
 YouTube 长视频下载器 - 专门用于下载 1 小时以上的视频
 使用多种绕过策略和断点续传功能
+
+使用方法:
+python download_long_video.py "URL" [--quality 1080|720|480|best] [--subtitles]
 """
 import sys
 import os
 import json
 import time
 import subprocess
+import argparse
 from pathlib import Path
 from datetime import datetime
 
 # ============================================
-# 配置区域 - 修改这里
+# 命令行参数解析
 # ============================================
-VIDEO_URL = "https://youtu.be/jKr9Omaf3Gs"  # 修改为你的视频链接
+def parse_args():
+    parser = argparse.ArgumentParser(description='YouTube 视频下载器')
+    parser.add_argument('url', help='YouTube 视频链接')
+    parser.add_argument('--quality', default='1080', choices=['1080', '720', '480', 'best'],
+                       help='视频质量 (默认: 1080)')
+    parser.add_argument('--subtitles', action='store_true', help='同时下载字幕')
+    return parser.parse_args()
+
+args = parse_args()
+
+# ============================================
+# 配置区域
+# ============================================
+VIDEO_URL = args.url
+QUALITY = args.quality
+DOWNLOAD_SUBTITLES = args.subtitles
 OUTPUT_DIR = Path(r"D:\YT_Market_Tool\youtube-clips")
 COOKIES_FILE = Path(r"D:\YT_Market_Tool\cookies.txt")
+
+# ============================================
+# FFmpeg 配置 - 如果已安装，指定路径
+# ============================================
+# 方法1: 如果 ffmpeg 在系统 PATH 中，设为 None
+# FFMPEG_PATH = None
+
+# 方法2: 如果 ffmpeg 在特定位置，指定完整路径
+FFMPEG_PATH = r"D:\pdf\kaopu\ffmpeg-master-latest-win64-gpl-shared\ffmpeg-master-latest-win64-gpl-shared\bin\ffmpeg.exe"
+
+# 方法3: 如果放在项目目录中
+# FFMPEG_PATH = Path(__file__).parent / "ffmpeg.exe"
 
 # ============================================
 # 日志和输出
@@ -66,16 +97,29 @@ def download_with_cookies():
 
     output_template = str(OUTPUT_DIR / '%(title)s.%(ext)s')
 
+    # 根据质量参数构建格式字符串
+    if QUALITY == 'best':
+        format_str = 'bestvideo+bestaudio/best'
+    else:
+        format_str = f'bestvideo[height<={QUALITY}][ext=mp4]+bestaudio[ext=m4a]/best[height<={QUALITY}][ext=mp4]/best'
+
     cmd = [
         'yt-dlp',
         '--cookies', str(COOKIES_FILE),
-        '--format', 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best',
+        '--format', format_str,
         '--output', output_template,
         '--merge-output-format', 'mp4',
-        '--progress',
-        '--newline',
-        VIDEO_URL
     ]
+
+    # 添加 ffmpeg 路径（如果指定）
+    if FFMPEG_PATH:
+        cmd.extend(['--ffmpeg-location', str(FFMPEG_PATH)])
+
+    # 添加字幕选项
+    if DOWNLOAD_SUBTITLES:
+        cmd.extend(['--write-subs', '--sub-lang', 'zh-Hans,en', '--embed-subs'])
+
+    cmd.extend(['--progress', '--newline', VIDEO_URL])
 
     return run_download(cmd, "方法 1 (cookies)")
 
@@ -88,6 +132,12 @@ def download_from_browser():
     # 尝试多个浏览器
     browsers = ['chrome', 'edge', 'firefox', 'brave']
 
+    # 根据质量参数构建格式字符串
+    if QUALITY == 'best':
+        format_str = 'bestvideo+bestaudio/best'
+    else:
+        format_str = f'bestvideo[height<={QUALITY}][ext=mp4]+bestaudio[ext=m4a]/best[height<={QUALITY}][ext=mp4]/best'
+
     for browser in browsers:
         log(f"   尝试浏览器: {browser}")
 
@@ -96,13 +146,20 @@ def download_from_browser():
         cmd = [
             'yt-dlp',
             '--cookies-from-browser', browser,
-            '--format', 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best',
+            '--format', format_str,
             '--output', output_template,
             '--merge-output-format', 'mp4',
-            '--progress',
-            '--newline',
-            VIDEO_URL
         ]
+
+        # 添加 ffmpeg 路径（如果指定）
+        if FFMPEG_PATH:
+            cmd.extend(['--ffmpeg-location', str(FFMPEG_PATH)])
+
+        # 添加字幕选项
+        if DOWNLOAD_SUBTITLES:
+            cmd.extend(['--write-subs', '--sub-lang', 'zh-Hans,en', '--embed-subs'])
+
+        cmd.extend(['--progress', '--newline', VIDEO_URL])
 
         result = run_download(cmd, f"方法 2 ({browser})")
         if result and result['success']:
@@ -118,16 +175,29 @@ def download_with_android_client():
 
     output_template = str(OUTPUT_DIR / '%(title)s.%(ext)s')
 
+    # 根据质量参数构建格式字符串
+    if QUALITY == 'best':
+        format_str = 'bestvideo+bestaudio/best'
+    else:
+        format_str = f'bestvideo[height<={QUALITY}][ext=mp4]+bestaudio[ext=m4a]/best[height<={QUALITY}][ext=mp4]/best'
+
     cmd = [
         'yt-dlp',
         '--extractor-args', 'youtube:player_client=android',
-        '--format', 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best',
+        '--format', format_str,
         '--output', output_template,
         '--merge-output-format', 'mp4',
-        '--progress',
-        '--newline',
-        VIDEO_URL
     ]
+
+    # 添加 ffmpeg 路径（如果指定）
+    if FFMPEG_PATH:
+        cmd.extend(['--ffmpeg-location', str(FFMPEG_PATH)])
+
+    # 添加字幕选项
+    if DOWNLOAD_SUBTITLES:
+        cmd.extend(['--write-subs', '--sub-lang', 'zh-Hans,en', '--embed-subs'])
+
+    cmd.extend(['--progress', '--newline', VIDEO_URL])
 
     return run_download(cmd, "方法 3 (Android)")
 
@@ -139,16 +209,29 @@ def download_with_ios_client():
 
     output_template = str(OUTPUT_DIR / '%(title)s.%(ext)s')
 
+    # 根据质量参数构建格式字符串
+    if QUALITY == 'best':
+        format_str = 'bestvideo+bestaudio/best'
+    else:
+        format_str = f'bestvideo[height<={QUALITY}][ext=mp4]+bestaudio[ext=m4a]/best[height<={QUALITY}][ext=mp4]/best'
+
     cmd = [
         'yt-dlp',
         '--extractor-args', 'youtube:player_client=ios',
-        '--format', 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best',
+        '--format', format_str,
         '--output', output_template,
         '--merge-output-format', 'mp4',
-        '--progress',
-        '--newline',
-        VIDEO_URL
     ]
+
+    # 添加 ffmpeg 路径（如果指定）
+    if FFMPEG_PATH:
+        cmd.extend(['--ffmpeg-location', str(FFMPEG_PATH)])
+
+    # 添加字幕选项
+    if DOWNLOAD_SUBTITLES:
+        cmd.extend(['--write-subs', '--sub-lang', 'zh-Hans,en', '--embed-subs'])
+
+    cmd.extend(['--progress', '--newline', VIDEO_URL])
 
     return run_download(cmd, "方法 4 (iOS)")
 
@@ -171,15 +254,28 @@ def download_with_embed():
 
     output_template = str(OUTPUT_DIR / '%(title)s.%(ext)s')
 
+    # 根据质量参数构建格式字符串
+    if QUALITY == 'best':
+        format_str = 'bestvideo+bestaudio/best'
+    else:
+        format_str = f'bestvideo[height<={QUALITY}][ext=mp4]+bestaudio[ext=m4a]/best[height<={QUALITY}][ext=mp4]/best'
+
     cmd = [
         'yt-dlp',
-        '--format', 'bestvideo[height<=1080][ext=mp4]+bestaudio[ext=m4a]/best[height<=1080][ext=mp4]/best',
+        '--format', format_str,
         '--output', output_template,
         '--merge-output-format', 'mp4',
-        '--progress',
-        '--newline',
-        embed_url
     ]
+
+    # 添加 ffmpeg 路径（如果指定）
+    if FFMPEG_PATH:
+        cmd.extend(['--ffmpeg-location', str(FFMPEG_PATH)])
+
+    # 添加字幕选项
+    if DOWNLOAD_SUBTITLES:
+        cmd.extend(['--write-subs', '--sub-lang', 'zh-Hans,en', '--embed-subs'])
+
+    cmd.extend(['--progress', '--newline', embed_url])
 
     return run_download(cmd, "方法 5 (embed)")
 
@@ -278,6 +374,8 @@ def main():
     log("YouTube 长视频下载器")
     log("="*60)
     log(f"视频 URL: {VIDEO_URL}")
+    log(f"视频质量: {QUALITY}")
+    log(f"下载字幕: {'是' if DOWNLOAD_SUBTITLES else '否'}")
     log(f"输出目录: {OUTPUT_DIR}")
     log("="*60)
 

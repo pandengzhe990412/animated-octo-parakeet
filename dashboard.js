@@ -294,6 +294,11 @@ $('monitorBtn').addEventListener('click', () => {
     chrome.tabs.create({ url: chrome.runtime.getURL('monitor.html') });
 });
 
+// === 4.3 下载页面按钮 ===
+$('downloadPageBtn').addEventListener('click', () => {
+    chrome.tabs.create({ url: chrome.runtime.getURL('download.html') });
+});
+
 // === 5. 开始按钮 ===
 $('startBtn').addEventListener('click', async () => {
     if (excelData.length === 0) { alert("请先上传剧单！"); return; }
@@ -1175,12 +1180,13 @@ function renderTable() {
         const safeUrl = escapeHtmlAttribute(url);
         const safeThumbnail = escapeHtmlAttribute(thumbnail);
 
-        // 生成下载链接（使用在线下载服务）
+        // 生成下载链接（跳转到在线下载网站）
         const videoId = url.match(/\/watch\?v=([^&]+)/)?.[1] || '';
         let downloadBtn = '';
         if (videoId) {
-            const downloadUrl = `https://www.y2mate.com/youtube/${videoId}`;
-            downloadBtn = `<button class="download-btn" onclick="event.stopPropagation(); window.open('${downloadUrl}', '_blank')" title="在线下载">⬇️</button>`;
+            // ytdown.to 的格式：https://ytdown.to/watch?v=VIDEO_ID
+            const onlineDownloadUrl = `https://ytdown.to/watch?v=${videoId}`;
+            downloadBtn = `<button class="download-btn" onclick="event.stopPropagation(); window.open('${onlineDownloadUrl}', '_blank')" title="在线下载视频">⬇️</button>`;
         }
 
         return `
